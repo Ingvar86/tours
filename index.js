@@ -3,13 +3,17 @@ var fs = require("fs"),
     request = require("request"),
     cheerio = require("cheerio"),
     iconv = require('iconv-lite'),
+    tourService = require('./services/tourService'),
     url = 'http://online.joinup.ua/search_tour?samo_action=PRICES&TOWNFROMINC=37&STATEINC=9&TOURINC=0&PROGRAMINC=0&CHECKIN_BEG=20161111&NIGHTS_FROM=7&CHECKIN_END=20161125&NIGHTS_TILL=7&ADULT=2&CURRENCY=2&CHILD=0&TOWNTO_ANY=0&TOWNTO=NaN%2C1839&STARS_ANY=1&STARS=&hotelsearch=0&HOTELS_ANY=1&HOTELS=&MEAL=&FREIGHT=1&FILTER=0&MOMENT_CONFIRM=0&HOTELTYPES=&PACKET=0&PRICEPAGE=1';
 
 function main() {
   request({url: url, encoding: null}, (error, response, body) => {
     if (error) throw err;
     var data = iconv.decode(body, 'win1251');
-    console.log(getTours(data.toString()));
+    let tours = getTours(data.toString());
+    tourService.insertMany(tours, () => {
+      console.log('tours were added');
+    });
   });
 }
 
@@ -33,7 +37,8 @@ function getTours(data) {
 }
 
 function Tour(price_info) {
-    this.from = price_info.find('td[data-label="Заезд"]').text().match(/\d{2}\.\d{2}\.\d{4}/)[0];
+    let fromDate = price_info.find('td[data-label="Заезд"]').text().match(/\d{2}\.\d{2}\.\d{4}/)[0].match(/\d+/g);
+    this.from = new Date(Date.UTC(fromDate[2], fromDate[1], fromDate[0]));    
     this.nights = price_info.find('td[data-label="Ночи"]').text().match(/\d+/)[0];
     this.hotel = price_info.find('td[data-label="Гостиница"] a').text();
     this.meal = price_info.find('td[data-label="Питание"]').text().match(/\w+/)[0];
@@ -41,6 +46,7 @@ function Tour(price_info) {
     let temp = price_info.find('td[data-label="Стоимость"]').text().match(/\w+/g);
     this.price = temp[0];
     this.currency = temp[1];
+    this.checkDate = new Date();
 }
 
 main();
