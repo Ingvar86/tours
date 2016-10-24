@@ -1,8 +1,9 @@
 var CronJob = require('cron').CronJob;
 var fetch = require('./index').fetch;
+var shedule = process.env.SHEDULE;
 
 var job = new CronJob({
-  cronTime: '* 8,14 * * * *',
+  cronTime: shedule,
   onTick: fetch,
   start: true,
   timeZone: 'Europe/Zaporozhye'
