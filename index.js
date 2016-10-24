@@ -6,24 +6,6 @@ var fs = require("fs"),
     tourService = require('./services/tourService'),
     url = 'http://online.joinup.ua/search_tour?samo_action=PRICES&TOWNFROMINC=37&STATEINC=9&TOURINC=0&PROGRAMINC=0&CHECKIN_BEG=20161111&NIGHTS_FROM=7&CHECKIN_END=20161125&NIGHTS_TILL=7&ADULT=2&CURRENCY=2&CHILD=0&TOWNTO_ANY=0&TOWNTO=NaN%2C1839&STARS_ANY=1&STARS=&hotelsearch=0&HOTELS_ANY=1&HOTELS=&MEAL=&FREIGHT=1&FILTER=0&MOMENT_CONFIRM=0&HOTELTYPES=&PACKET=0&PRICEPAGE=1';
 
-function main() {
-  request({url: url, encoding: null}, (error, response, body) => {
-    if (error) throw err;
-    var data = iconv.decode(body, 'win1251');
-    let tours = getTours(data.toString());
-    tourService.insertMany(tours, () => {
-      console.log('tours were added');
-    });
-  });
-}
-
-function readFromFile() {
-  fs.readFile('response.js', (err, data) => {
-    if (err) throw err;
-    console.log(getTours(data.toString()));
-  });
-}
-
 function getTours(data) {
     var response = data.match(/\(\'.*\'\)/)[0].slice(2, -2).replace(/\\\"/g, '"').replace(/\\n/g, '').replace(/\\\s/g,'');
     var $ = cheerio.load(response);
@@ -49,4 +31,13 @@ function Tour(price_info) {
     this.checkDate = new Date();
 }
 
-main();
+exports.fetchTours = function () {
+  request({url: url, encoding: null}, (error, response, body) => {
+    if (error) throw err;
+    var data = iconv.decode(body, 'win1251');
+    let tours = getTours(data.toString());
+    tourService.insertMany(tours, () => {
+      console.log('tours were added');
+    });
+  });
+}
