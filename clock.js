@@ -1,5 +1,5 @@
 var CronJob = require('cron').CronJob;
-var fetch = require('./index').fetch;
+var fetch = require('./tours').fetch;
 var shedule = process.env.SHEDULE;
 
 var job = new CronJob({

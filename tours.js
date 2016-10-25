@@ -31,7 +31,7 @@ function Tour(price_info) {
     this.checkDate = new Date();
 }
 
-exports.fetchTours = function () {
+exports.fetch = function () {
   request({url: url, encoding: null}, (error, response, body) => {
     if (error) throw err;
     var data = iconv.decode(body, 'win1251');

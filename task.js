@@ -1,3 +1,3 @@
-var fetch = require('./index').fetch;
+var fetch = require('./tours').fetch;
 
 fetch();
