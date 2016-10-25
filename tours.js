@@ -20,7 +20,7 @@ function getTours(data) {
 
 function Tour(price_info) {
     let fromDate = price_info.find('td[data-label="Заезд"]').text().match(/\d{2}\.\d{2}\.\d{4}/)[0].match(/\d+/g);
-    this.from = new Date(Date.UTC(fromDate[2], fromDate[1], fromDate[0]));    
+    this.from = new Date(Date.UTC(fromDate[2], fromDate[1] - 1, fromDate[0]));    
     this.nights = price_info.find('td[data-label="Ночи"]').text().match(/\d+/)[0];
     this.hotel = price_info.find('td[data-label="Гостиница"] a').text();
     this.meal = price_info.find('td[data-label="Питание"]').text().match(/\w+/)[0];
