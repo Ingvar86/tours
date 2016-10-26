@@ -2,7 +2,10 @@ var gulp = require("gulp");
 var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var tsify = require("tsify");
-const concat = require('gulp-concat');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var buffer = require('vinyl-buffer');
 
 gulp.task('copy:libs', () => {
     return gulp.src([
@@ -14,10 +17,11 @@ gulp.task('copy:libs', () => {
     'node_modules/bootstrap/dist/js/bootstrap.min.js',
     ])
     .pipe(concat('lib.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('public'));
 });
 
-gulp.task("bundle", function () {
+gulp.task("default", function () {
     return browserify({
         basedir: '.',
         debug: true,
@@ -28,7 +32,9 @@ gulp.task("bundle", function () {
     .plugin(tsify)
     .bundle()
     .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest("public"));
 });
-
-gulp.task('default', ['bundle', 'copy:libs']);
