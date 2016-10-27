@@ -26,7 +26,7 @@ function Tour(price_info) {
     this.meal = price_info.find('td[data-label="Питание"]').text().match(/\w+/)[0];
     this.room = price_info.find('td[data-label="Номер"]').text();
     let temp = price_info.find('td[data-label="Стоимость"]').text().match(/\w+/g);
-    this.price = temp[0];
+    this.price = +temp[0];
     this.currency = temp[1];
     this.checkDate = new Date();
 }
