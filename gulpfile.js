@@ -6,6 +6,9 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
+var gulpif = require('gulp-if');
+var prod = !!require('yargs').argv.prod;
+var dev = !prod;
 
 gulp.task('copy:libs', () => {
     return gulp.src([
@@ -24,7 +27,7 @@ gulp.task('copy:libs', () => {
 gulp.task("default", function () {
     return browserify({
         basedir: '.',
-        debug: true,
+        debug: dev,
         entries: ['app/main.ts'],
         cache: {},
         packageCache: {}
@@ -33,8 +36,8 @@ gulp.task("default", function () {
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
+    .pipe(gulpif(dev, sourcemaps.init({loadMaps: true})))
+    .pipe(gulpif(prod, uglify()))
+    .pipe(gulpif(dev, sourcemaps.write('./')))
     .pipe(gulp.dest("public"));
 });
