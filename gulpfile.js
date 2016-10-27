@@ -24,7 +24,19 @@ gulp.task('copy:libs', () => {
     .pipe(gulp.dest('public'));
 });
 
-gulp.task("default", function () {
+gulp.task('copy:html', () => {
+  return gulp.src('app/*.html')
+    .pipe(gulp.dest('public'))
+});
+
+gulp.task('copy:css', () => {
+  return gulp.src([
+    'node_modules/bootstrap/dist/css/bootstrap.min.css'
+    ])
+    .pipe(gulp.dest('public'))
+});
+
+gulp.task("default", ['copy:html'], function () {
     return browserify({
         basedir: '.',
         debug: dev,

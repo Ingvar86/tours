@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">From</div>
+                <input type="date" class="form-control" [(ngModel)]="dateFrom"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">To</div>
+                <input type="date" class="form-control" [(ngModel)]="dateTo"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">Nigths</div>
+                <input type="text" class="form-control" [(ngModel)]="nigths"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <button type="button" class="btn btn-primary" (click)="onSearchClick()">Search</button>
+        </div>  
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-offset-2 col-lg-8">
+            <table class="table table-bordered table-condensed table-sm">
+                <thead>
+                <tr>
+                    <th class="col-lg-1">From</th>
+                    <th class="col-lg-1">Nigths</th>
+                    <th class="col-lg-2">Hotel</th>
+                    <th class="col-lg-1">Meal</th>
+                    <th class="col-lg-2">Room</th>
+                    <th class="col-lg-1">Price</th>
+                    <th class="col-lg-1">Chcek Date</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="tours">
+                    <tr *ngFor="let tour of tours">
+                        <td class="col-lg-1">{{tour.from | date: 'dd/MM/yy HH:mm'}}</td>
+                        <td class="col-lg-1">{{tour.nigths}}</td>
+                        <td class="col-lg-2">{{tour.hotel}}</td>
+                        <td class="col-lg-1">{{tour.meal}}</td>
+                        <td class="col-lg-2">{{tour.room}}</td>
+                        <td class="col-lg-1">{{tour.price + tour.currency}}</td>
+                        <td class="col-lg-1">{{tour.checkDate | date: 'dd/MM/yy HH:mm'}}</td>
+                    </tr>
+                </tbody>
+            </table> 
+        </div>
+    </div> 
+</div>
