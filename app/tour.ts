@@ -1,6 +1,6 @@
 export class Tour {
   from: Date;
-  nigths: number;
+  nights: number;
   hotel: string;
   meal: string;
   room: string;

@@ -9,14 +9,14 @@ import { Tour } from './tour';
 export class ToursComponent { 
     private dateFrom: string;
     private dateTo: string;
-    private nigths: number = 7;
+    private nights: number = 7;
     private page: number = 1;
     private tours: Tour[];
 
     constructor(private toursService: ToursService) {}
 
     onSearchClick(): void {
-        this.toursService.getTours(this.dateFrom, this.dateTo, this.nigths, this.page)
+        this.toursService.getTours(this.dateFrom, this.dateTo, this.nights, this.page)
             .then(response => this.tours = response);
     } 
 }
