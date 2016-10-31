@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, URLSearchParams } from '@angular/http';
 import { Tour } from './tour';
+import { SearchParams } from './searchParams'; 
 
 import 'rxjs/add/operator/toPromise';
 
@@ -9,12 +10,14 @@ export class ToursService {
     private toursUrl = 'api/tours'
     constructor(private http: Http) { }
 
-    getTours(dateFrom: string, dateTo: string, nights: number, page: number) : Promise<Tour[]> {
+    getTours(param: SearchParams) : Promise<Tour[]> {
         let params = new URLSearchParams();
-        params.set('dateFrom', dateFrom);
-        params.set('dateTo', dateTo);
-        params.set('nights', nights.toString());
-        params.set('page', page.toString());
+        params.set('dateFrom', param.dateFrom);
+        params.set('dateTo', param.dateTo);
+        params.set('hotel', param.hotel);
+        params.set('room', param.room);
+        params.set('nights', param.nights.toString());
+        params.set('page', param.page.toString());
         return this.http.get(this.toursUrl, {search: params})
             .toPromise()
             .then(response => response.json() as Tour[])
