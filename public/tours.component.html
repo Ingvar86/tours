@@ -1,5 +1,25 @@
 <div class="container-fluid">
-    <div class="row">
+    <div class="row top20">
+        <div class="col-lg-offset-2 col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">Hotel</div>
+                <input type="text" class="form-control" [(ngModel)]="hotel"/>
+            </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">Room</div>
+                <input type="text" class="form-control" [(ngModel)]="room"/>
+            </div>
+        </div>        
+        <div class="col-lg-2">
+            <div class="input-group">
+                <div class="input-group-addon">Nigths</div>
+                <input type="text" class="form-control" [(ngModel)]="nights"/>
+            </div>
+        </div> 
+    </div>
+    <div class="row top20">
         <div class="col-lg-offset-2 col-lg-2">
             <div class="input-group">
                 <div class="input-group-addon">From</div>
@@ -13,19 +33,13 @@
             </div>
         </div>
         <div class="col-lg-2">
-            <div class="input-group">
-                <div class="input-group-addon">Nigths</div>
-                <input type="text" class="form-control" [(ngModel)]="nigths"/>
-            </div>
-        </div>
-        <div class="col-lg-2">
             <button type="button" class="btn btn-primary" (click)="onSearchClick()">Search</button>
-        </div>  
+        </div> 
     </div>
 </div>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row top20">
         <div class="col-lg-offset-2 col-lg-8">
             <table class="table table-bordered table-condensed table-sm">
                 <thead>
