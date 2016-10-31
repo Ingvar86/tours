@@ -41,7 +41,7 @@ function getQuery(query) {
     let room = query.room;
     var q = {from: {$gte: new Date(dateFrom), $lte: new Date(dateTo)}, nights: nights};
     if (hotel) {
-        q.hote = hotel;
+        q.hotel = hotel;
     }
     if (room) {
         q.room = room;
