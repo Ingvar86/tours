@@ -17,16 +17,11 @@ gulp.task('copy:libs', () => {
     'node_modules/reflect-metadata/Reflect.js',
     'node_modules/systemjs/dist/system.src.js',   
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap/dist/js/bootstrap.min.js',
+    'node_modules/bootstrap/dist/js/bootstrap.min.js'
     ])
     .pipe(concat('lib.js'))
     .pipe(uglify())
     .pipe(gulp.dest('public'));
-});
-
-gulp.task('copy:html', () => {
-  return gulp.src('app/*.html')
-    .pipe(gulp.dest('public'))
 });
 
 gulp.task('copy:css', () => {
@@ -36,7 +31,7 @@ gulp.task('copy:css', () => {
     .pipe(gulp.dest('public'))
 });
 
-gulp.task("default", ['copy:html'], function () {
+gulp.task("default", function () {
     return browserify({
         basedir: '.',
         debug: dev,

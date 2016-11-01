@@ -3,6 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const url = process.env.MONGOLAB_URI
 const pageSize = 50;
+const data = require('./data.json');
 
 exports.insertMany = function(tours, callback) {
     MongoClient.connect(url, function(err, db) {
@@ -17,7 +18,7 @@ exports.insertMany = function(tours, callback) {
     });
 }
 
-exports.find = function(query, callback) {
+function find(query, callback) {
     let q = getQuery(query);
     let page = query.page;
     MongoClient.connect(url, (err, db) => {
@@ -32,6 +33,23 @@ exports.find = function(query, callback) {
         });   
     });
 }
+
+function findMock(query, callback) {
+    if (callback) {
+        let dateFrom = query.dateFrom;
+        let dateTo = query.dateTo;
+        let nights = query.nights;
+        let hotel = query.hotel;
+        let room = query.room;
+        let tours = data.filter(tour => {
+            return tour.from >= dateFrom && tour.from <= dateTo && tour.nights == nights &&
+            (!hotel || tour.hotel === hotel) && (!room || tour.room === room);
+        })
+        callback(tours);
+    }
+}
+
+exports.find = find;
 
 function getQuery(query) {
     let dateFrom = query.dateFrom;

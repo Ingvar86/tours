@@ -55,7 +55,7 @@
                 </thead>
                 <tbody *ngIf="tours">
                     <tr *ngFor="let tour of tours">
-                        <td class="col-lg-1">{{tour.from | date: 'dd/MM/yy HH:mm'}}</td>
+                        <td class="col-lg-1">{{tour.from | date: 'dd/MM/yy'}}</td>
                         <td class="col-lg-1">{{tour.nights}}</td>
                         <td class="col-lg-2">{{tour.hotel}}</td>
                         <td class="col-lg-1">{{tour.meal}}</td>
@@ -67,4 +67,12 @@
             </table> 
         </div>
     </div> 
+</div>
+
+<div class="container-fluid">
+    <div class="row top20">
+        <div class="col-lg-offset-2 col-lg-8">
+            <bar-chart *ngIf="tours" [data]="tours"></bar-chart>
+        </div>
+    </div>
 </div>
